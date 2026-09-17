@@ -1,0 +1,6 @@
+__pycache__/
+*.pyc
+.spyproject/
+.vscode/
+venv/
+.venv/
