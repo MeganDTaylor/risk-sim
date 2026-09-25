@@ -1,0 +1,510 @@
+{
+  "best_weights": {
+    "attack_score_threshold": 2.4036961643138155,
+    "aggression": 0.9436450434597461,
+    "fortify_min_spare": 7.1950831387937955,
+    "continent_weight": 1.3353874931012173,
+    "elimination_weight": 2.9890420952226737,
+    "safety_weight": 0.17856536684703256,
+    "reinforcement_weakness_weight": 2.044653694316604
+  },
+  "population": [
+    {
+      "attack_score_threshold": 2.357634812990306,
+      "aggression": 1.0,
+      "fortify_min_spare": 1.418264854935682,
+      "continent_weight": 1.578065250796603,
+      "elimination_weight": 4.973216102841964,
+      "safety_weight": 1.0298192514327142,
+      "reinforcement_weakness_weight": 4.690688532673793
+    },
+    {
+      "attack_score_threshold": 2.2241691374871477,
+      "aggression": 1.0,
+      "fortify_min_spare": 1.418264854935682,
+      "continent_weight": 1.2881519845259979,
+      "elimination_weight": 4.973216102841964,
+      "safety_weight": 0.8740813574683275,
+      "reinforcement_weakness_weight": 3.12025403175275
+    },
+    {
+      "attack_score_threshold": 3.0,
+      "aggression": 1.0,
+      "fortify_min_spare": 8,
+      "continent_weight": 1.6105442150311218,
+      "elimination_weight": 4.713750455967993,
+      "safety_weight": 0.4472346436020446,
+      "reinforcement_weakness_weight": 3.12025403175275
+    },
+    {
+      "attack_score_threshold": 3.0,
+      "aggression": 0.741473172445956,
+      "fortify_min_spare": 6.749871398218449,
+      "continent_weight": 1.6105442150311218,
+      "elimination_weight": 4.713750455967993,
+      "safety_weight": 0.09814854836634967,
+      "reinforcement_weakness_weight": 4.690688532673793
+    },
+    {
+      "attack_score_threshold": 2.292302988901974,
+      "aggression": 1.0,
+      "fortify_min_spare": 1.418264854935682,
+      "continent_weight": 1.6970078006724407,
+      "elimination_weight": 4.713750455967993,
+      "safety_weight": 0.8830702456463796,
+      "reinforcement_weakness_weight": 3.12025403175275
+    },
+    {
+      "attack_score_threshold": 2.738426187885478,
+      "aggression": 1.0,
+      "fortify_min_spare": 5.560222797225312,
+      "continent_weight": 0.8533061936617132,
+      "elimination_weight": 4.713750455967993,
+      "safety_weight": 0.3237741391930691,
+      "reinforcement_weakness_weight": 4.690688532673793
+    },
+    {
+      "attack_score_threshold": 3.0,
+      "aggression": 1.0,
+      "fortify_min_spare": 8,
+      "continent_weight": 1.4434267918863968,
+      "elimination_weight": 4.713750455967993,
+      "safety_weight": 1.318850428709565,
+      "reinforcement_weakness_weight": 4.690688532673793
+    },
+    {
+      "attack_score_threshold": 2.2241691374871477,
+      "aggression": 0.9822710902289064,
+      "fortify_min_spare": 8,
+      "continent_weight": 0.8562592209074941,
+      "elimination_weight": 3.4198454355940155,
+      "safety_weight": 0.8740813574683275,
+      "reinforcement_weakness_weight": 5.7145555674454345
+    },
+    {
+      "attack_score_threshold": 3.0,
+      "aggression": 0.9962701849151416,
+      "fortify_min_spare": 7.1950831387937955,
+      "continent_weight": 1.1872404212417336,
+      "elimination_weight": 4.713750455967993,
+      "safety_weight": 0.8740813574683275,
+      "reinforcement_weakness_weight": 5.7145555674454345
+    },
+    {
+      "attack_score_threshold": 3.0,
+      "aggression": 0.741473172445956,
+      "fortify_min_spare": 6.749871398218449,
+      "continent_weight": 1.1872404212417336,
+      "elimination_weight": 2.9890420952226737,
+      "safety_weight": 0.09814854836634967,
+      "reinforcement_weakness_weight": 7.5006652204238895
+    },
+    {
+      "attack_score_threshold": 2.756997967327028,
+      "aggression": 0.9822710902289064,
+      "fortify_min_spare": 8,
+      "continent_weight": 1.1938236582356572,
+      "elimination_weight": 4.815281238986155,
+      "safety_weight": 0.0,
+      "reinforcement_weakness_weight": 0.0
+    },
+    {
+      "attack_score_threshold": 2.4036961643138155,
+      "aggression": 0.9436450434597461,
+      "fortify_min_spare": 7.1950831387937955,
+      "continent_weight": 1.1872404212417336,
+      "elimination_weight": 2.9890420952226737,
+      "safety_weight": 0.4568318756025938,
+      "reinforcement_weakness_weight": 7.5006652204238895
+    },
+    {
+      "attack_score_threshold": 2.4036961643138155,
+      "aggression": 0.9436450434597461,
+      "fortify_min_spare": 8,
+      "continent_weight": 1.3353874931012173,
+      "elimination_weight": 2.9890420952226737,
+      "safety_weight": 0.17856536684703256,
+      "reinforcement_weakness_weight": 2.044653694316604
+    },
+    {
+      "attack_score_threshold": 2.756997967327028,
+      "aggression": 0.9822710902289064,
+      "fortify_min_spare": 5.560222797225312,
+      "continent_weight": 1.1938236582356572,
+      "elimination_weight": 4.815281238986155,
+      "safety_weight": 0.0,
+      "reinforcement_weakness_weight": 5.7145555674454345
+    },
+    {
+      "attack_score_threshold": 2.4036961643138155,
+      "aggression": 0.9436450434597461,
+      "fortify_min_spare": 7.1950831387937955,
+      "continent_weight": 1.3353874931012173,
+      "elimination_weight": 2.9890420952226737,
+      "safety_weight": 0.17856536684703256,
+      "reinforcement_weakness_weight": 2.044653694316604
+    },
+    {
+      "attack_score_threshold": 2.5181046767526474,
+      "aggression": 0.9708807798446281,
+      "fortify_min_spare": 8,
+      "continent_weight": 0.49908315604125475,
+      "elimination_weight": 2.9890420952226737,
+      "safety_weight": 0.0,
+      "reinforcement_weakness_weight": 5.7145555674454345
+    },
+    {
+      "attack_score_threshold": 2.357634812990306,
+      "aggression": 1.0,
+      "fortify_min_spare": 7.1950831387937955,
+      "continent_weight": 1.578065250796603,
+      "elimination_weight": 5.019813736136424,
+      "safety_weight": 0.17856536684703256,
+      "reinforcement_weakness_weight": 2.044653694316604
+    },
+    {
+      "attack_score_threshold": 2.738426187885478,
+      "aggression": 1.0,
+      "fortify_min_spare": 5.560222797225312,
+      "continent_weight": 0.49908315604125475,
+      "elimination_weight": 2.9890420952226737,
+      "safety_weight": 0.0,
+      "reinforcement_weakness_weight": 5.7145555674454345
+    },
+    {
+      "attack_score_threshold": 2.756997967327028,
+      "aggression": 0.9822710902289064,
+      "fortify_min_spare": 5.560222797225312,
+      "continent_weight": 1.1938236582356572,
+      "elimination_weight": 4.713750455967993,
+      "safety_weight": 0.8830702456463796,
+      "reinforcement_weakness_weight": 5.7145555674454345
+    },
+    {
+      "attack_score_threshold": 2.756997967327028,
+      "aggression": 0.9822710902289064,
+      "fortify_min_spare": 8,
+      "continent_weight": 0.8562592209074941,
+      "elimination_weight": 3.4198454355940155,
+      "safety_weight": 0.8740813574683275,
+      "reinforcement_weakness_weight": 0.2323054581612641
+    },
+    {
+      "attack_score_threshold": 2.5181046767526474,
+      "aggression": 1.0,
+      "fortify_min_spare": 7.017312807911099,
+      "continent_weight": 0.8533061936617132,
+      "elimination_weight": 5.027843297250369,
+      "safety_weight": 0.0,
+      "reinforcement_weakness_weight": 3.886136490175079
+    },
+    {
+      "attack_score_threshold": 2.379838477361544,
+      "aggression": 1.0,
+      "fortify_min_spare": 1.418264854935682,
+      "continent_weight": 1.578065250796603,
+      "elimination_weight": 4.815281238986155,
+      "safety_weight": 0.0,
+      "reinforcement_weakness_weight": 1.5724793148567442
+    },
+    {
+      "attack_score_threshold": 2.292302988901974,
+      "aggression": 1.0,
+      "fortify_min_spare": 6.783870757617774,
+      "continent_weight": 1.6105442150311218,
+      "elimination_weight": 3.437814533652565,
+      "safety_weight": 0.4472346436020446,
+      "reinforcement_weakness_weight": 2.4927119624405503
+    },
+    {
+      "attack_score_threshold": 2.5195336773729906,
+      "aggression": 1.0,
+      "fortify_min_spare": 1.418264854935682,
+      "continent_weight": 1.4434267918863968,
+      "elimination_weight": 3.6335096755861813,
+      "safety_weight": 1.0993382885199234,
+      "reinforcement_weakness_weight": 3.12025403175275
+    },
+    {
+      "attack_score_threshold": 2.4036961643138155,
+      "aggression": 0.9436450434597461,
+      "fortify_min_spare": 8,
+      "continent_weight": 1.1872404212417336,
+      "elimination_weight": 1.8745945309756669,
+      "safety_weight": 0.4568318756025938,
+      "reinforcement_weakness_weight": 7.5006652204238895
+    },
+    {
+      "attack_score_threshold": 2.4036961643138155,
+      "aggression": 1.0,
+      "fortify_min_spare": 7.1950831387937955,
+      "continent_weight": 1.578065250796603,
+      "elimination_weight": 4.973216102841964,
+      "safety_weight": 0.4568318756025938,
+      "reinforcement_weakness_weight": 4.690688532673793
+    },
+    {
+      "attack_score_threshold": 2.2241691374871477,
+      "aggression": 1.0,
+      "fortify_min_spare": 1.418264854935682,
+      "continent_weight": 0.8562592209074941,
+      "elimination_weight": 3.4198454355940155,
+      "safety_weight": 1.2427389310183372,
+      "reinforcement_weakness_weight": 5.7145555674454345
+    },
+    {
+      "attack_score_threshold": 2.663506402819135,
+      "aggression": 0.741473172445956,
+      "fortify_min_spare": 7.789619692220169,
+      "continent_weight": 1.3353874931012173,
+      "elimination_weight": 2.9890420952226737,
+      "safety_weight": 0.09814854836634967,
+      "reinforcement_weakness_weight": 7.5006652204238895
+    },
+    {
+      "attack_score_threshold": 2.8033157721181143,
+      "aggression": 1.0,
+      "fortify_min_spare": 8,
+      "continent_weight": 1.1872404212417336,
+      "elimination_weight": 4.713750455967993,
+      "safety_weight": 0.4472346436020446,
+      "reinforcement_weakness_weight": 1.0547100557305598
+    },
+    {
+      "attack_score_threshold": 3.0,
+      "aggression": 0.9924345557583321,
+      "fortify_min_spare": 5.560222797225312,
+      "continent_weight": 1.6105442150311218,
+      "elimination_weight": 3.5449523236460703,
+      "safety_weight": 0.0,
+      "reinforcement_weakness_weight": 3.12025403175275
+    },
+    {
+      "attack_score_threshold": 2.7249784984385266,
+      "aggression": 0.8256219546136886,
+      "fortify_min_spare": 8,
+      "continent_weight": 1.1872404212417336,
+      "elimination_weight": 3.2823129988830333,
+      "safety_weight": 0.2907338490847115,
+      "reinforcement_weakness_weight": 0.0
+    },
+    {
+      "attack_score_threshold": 2.4036961643138155,
+      "aggression": 1.0,
+      "fortify_min_spare": 7.23605117124015,
+      "continent_weight": 1.3673267407449283,
+      "elimination_weight": 2.9890420952226737,
+      "safety_weight": 1.318850428709565,
+      "reinforcement_weakness_weight": 4.690688532673793
+    }
+  ],
+  "history": [
+    {
+      "best_wins": 5,
+      "mean_wins": 1.65625,
+      "rounds": 8
+    },
+    {
+      "best_wins": 4,
+      "mean_wins": 1.5625,
+      "rounds": 8
+    },
+    {
+      "best_wins": 4,
+      "mean_wins": 1.46875,
+      "rounds": 8
+    },
+    {
+      "best_wins": 5,
+      "mean_wins": 1.34375,
+      "rounds": 8
+    },
+    {
+      "best_wins": 3,
+      "mean_wins": 1.28125,
+      "rounds": 8
+    },
+    {
+      "best_wins": 5,
+      "mean_wins": 1.40625,
+      "rounds": 8
+    },
+    {
+      "best_wins": 3,
+      "mean_wins": 1.34375,
+      "rounds": 8
+    },
+    {
+      "best_wins": 5,
+      "mean_wins": 1.71875,
+      "rounds": 8
+    },
+    {
+      "best_wins": 4,
+      "mean_wins": 1.96875,
+      "rounds": 8
+    },
+    {
+      "best_wins": 4,
+      "mean_wins": 1.71875,
+      "rounds": 8
+    },
+    {
+      "best_wins": 4,
+      "mean_wins": 1.90625,
+      "rounds": 8
+    },
+    {
+      "best_wins": 5,
+      "mean_wins": 1.9375,
+      "rounds": 8
+    },
+    {
+      "best_wins": 4,
+      "mean_wins": 1.8125,
+      "rounds": 8
+    },
+    {
+      "best_wins": 5,
+      "mean_wins": 1.875,
+      "rounds": 8
+    },
+    {
+      "best_wins": 4,
+      "mean_wins": 1.71875,
+      "rounds": 8
+    },
+    {
+      "best_wins": 4,
+      "mean_wins": 1.6875,
+      "rounds": 8
+    },
+    {
+      "best_wins": 5,
+      "mean_wins": 1.6875,
+      "rounds": 8
+    },
+    {
+      "best_wins": 5,
+      "mean_wins": 1.96875,
+      "rounds": 8
+    },
+    {
+      "best_wins": 5,
+      "mean_wins": 1.90625,
+      "rounds": 8
+    },
+    {
+      "best_wins": 4,
+      "mean_wins": 1.75,
+      "rounds": 8
+    },
+    {
+      "best_wins": 5,
+      "mean_wins": 1.9375,
+      "rounds": 8
+    },
+    {
+      "best_wins": 3,
+      "mean_wins": 1.9375,
+      "rounds": 8
+    },
+    {
+      "best_wins": 5,
+      "mean_wins": 1.9375,
+      "rounds": 8
+    },
+    {
+      "best_wins": 5,
+      "mean_wins": 2.0,
+      "rounds": 8
+    },
+    {
+      "best_wins": 5,
+      "mean_wins": 1.9375,
+      "rounds": 8
+    },
+    {
+      "best_wins": 4,
+      "mean_wins": 1.9375,
+      "rounds": 8
+    },
+    {
+      "best_wins": 4,
+      "mean_wins": 1.90625,
+      "rounds": 8
+    },
+    {
+      "best_wins": 5,
+      "mean_wins": 1.96875,
+      "rounds": 8
+    },
+    {
+      "best_wins": 5,
+      "mean_wins": 1.84375,
+      "rounds": 8
+    },
+    {
+      "best_wins": 5,
+      "mean_wins": 1.90625,
+      "rounds": 8
+    },
+    {
+      "best_wins": 5,
+      "mean_wins": 1.875,
+      "rounds": 8
+    },
+    {
+      "best_wins": 4,
+      "mean_wins": 1.875,
+      "rounds": 8
+    },
+    {
+      "best_wins": 4,
+      "mean_wins": 1.84375,
+      "rounds": 8
+    },
+    {
+      "best_wins": 4,
+      "mean_wins": 1.8125,
+      "rounds": 8
+    },
+    {
+      "best_wins": 5,
+      "mean_wins": 1.90625,
+      "rounds": 8
+    },
+    {
+      "best_wins": 5,
+      "mean_wins": 1.875,
+      "rounds": 8
+    },
+    {
+      "best_wins": 4,
+      "mean_wins": 1.71875,
+      "rounds": 8
+    },
+    {
+      "best_wins": 4,
+      "mean_wins": 1.84375,
+      "rounds": 8
+    },
+    {
+      "best_wins": 4,
+      "mean_wins": 1.875,
+      "rounds": 8
+    },
+    {
+      "best_wins": 5,
+      "mean_wins": 1.875,
+      "rounds": 8
+    },
+    {
+      "best_wins": 4,
+      "mean_wins": 1.875,
+      "rounds": 8,
+      "final": true,
+      "win_rate_vs_baseline": 0.225
+    }
+  ]
+}

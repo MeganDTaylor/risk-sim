@@ -6,7 +6,7 @@ import random
 from abc import ABC, abstractmethod
 from typing import Dict, List, Optional, Tuple
 
-from . import rules
+from . import board, rules
 from .state import Card, GameState
 
 
@@ -60,6 +60,27 @@ def _border_territories(state: GameState, player_id: int) -> List[str]:
 
 def _weakest(state: GameState, territories: List[str]) -> str:
     return min(territories, key=lambda t: state.armies(t))
+
+
+def _threat_score(state: GameState, territory: str, player_id: int, exclude: Optional[str] = None) -> int:
+    """Total enemy armies bordering territory (optionally ignoring one neighbor),
+    used as a proxy for how exposed it is to a counter-attack."""
+    return sum(
+        state.armies(n) for n in state.neighbors(territory)
+        if n != exclude and state.owner(n) != player_id
+    )
+
+
+def _completes_continent(state: GameState, player_id: int, territory: str) -> bool:
+    """True if capturing territory would hand player_id every territory in its continent."""
+    continent = board.TERRITORY_TO_CONTINENT[territory]
+    return all(
+        state.owner(t) == player_id for t in board.CONTINENTS[continent] if t != territory
+    )
+
+
+def _would_eliminate(state: GameState, defender_id: Optional[int]) -> bool:
+    return defender_id is not None and len(state.territories_owned_by(defender_id)) == 1
 
 
 class RandomStrategy(Strategy):
@@ -118,24 +139,50 @@ class RandomStrategy(Strategy):
 
 
 class BaselineStrategy(Strategy):
-    """Simple greedy heuristic: reinforce the weakest border, attack whenever
-    clearly favored, press captures hard, and shore up the front line."""
+    """Greedy heuristic that scores candidate moves on multiple weighted
+    features (army ratio, continent completion, elimination, exposure, threat)
+    rather than a single ratio, so evolution over the weights (see
+    ParameterizedStrategy) can favor different tactical mixes - e.g. rushing
+    a continent bonus or hunting a weak player's last territory - instead of
+    just tuning how cautious/aggressive a single-feature heuristic is."""
 
-    def __init__(self, attack_ratio_threshold: float = 1.5, aggression: float = 0.8,
-                 fortify_min_spare: int = 2):
-        self.attack_ratio_threshold = attack_ratio_threshold
+    def __init__(self, attack_score_threshold: float = 1.5, aggression: float = 0.8,
+                 fortify_min_spare: int = 2, continent_weight: float = 1.0,
+                 elimination_weight: float = 1.5, safety_weight: float = 0.5,
+                 reinforcement_weakness_weight: float = 2.0):
+        self.attack_score_threshold = attack_score_threshold
         self.aggression = aggression
         self.fortify_min_spare = fortify_min_spare
+        self.continent_weight = continent_weight
+        self.elimination_weight = elimination_weight
+        self.safety_weight = safety_weight
+        self.reinforcement_weakness_weight = reinforcement_weakness_weight
 
     def choose_initial_placement(self, state, player_id):
         borders = _border_territories(state, player_id)
         owned = borders or state.territories_owned_by(player_id)
         return _weakest(state, owned)
 
+    def _reinforcement_score(self, state: GameState, player_id: int, territory: str) -> float:
+        threat = _threat_score(state, territory, player_id)
+        weakness = self.reinforcement_weakness_weight / state.armies(territory)
+        continent_incentive = self.continent_weight if any(
+            _completes_continent(state, player_id, n)
+            for n in state.enemy_neighbors(territory, player_id)
+        ) else 0.0
+        return threat + weakness + continent_incentive
+
     def choose_reinforcement_placement(self, state, player_id, army_count):
-        borders = _border_territories(state, player_id)
-        target = _weakest(state, borders or state.territories_owned_by(player_id))
-        return {target: army_count}
+        borders = _border_territories(state, player_id) or state.territories_owned_by(player_id)
+        scores = {t: max(self._reinforcement_score(state, player_id, t), 0.01) for t in borders}
+        total = sum(scores.values())
+        raw = {t: army_count * s / total for t, s in scores.items()}
+        placement = {t: int(n) for t, n in raw.items()}
+        remaining = army_count - sum(placement.values())
+        by_remainder = sorted(borders, key=lambda t: raw[t] - int(raw[t]), reverse=True)
+        for t in (by_remainder * (remaining // len(by_remainder) + 1))[:remaining]:
+            placement[t] += 1
+        return {t: n for t, n in placement.items() if n > 0}
 
     def choose_card_trade(self, state, player_id, mandatory):
         valid_sets = rules.find_valid_sets(state.players[player_id].cards)
@@ -147,18 +194,25 @@ class BaselineStrategy(Strategy):
             key=lambda combo: len(rules.territory_bonus_armies(combo, owned)),
         )
 
+    def _attack_score(self, state: GameState, player_id: int, frm: str, to: str) -> float:
+        score = state.armies(frm) / state.armies(to)
+        if _completes_continent(state, player_id, to):
+            score += self.continent_weight
+        if _would_eliminate(state, state.owner(to)):
+            score += self.elimination_weight
+        score -= self.safety_weight * _threat_score(state, frm, player_id, exclude=to) / state.armies(frm)
+        return score
+
     def _best_attack(self, state, player_id):
         best = None
-        best_ratio = self.attack_ratio_threshold
+        best_score = self.attack_score_threshold
         for t in state.territories_owned_by(player_id):
-            armies = state.armies(t)
-            if armies < 2:
+            if state.armies(t) < 2:
                 continue
             for enemy in state.enemy_neighbors(t, player_id):
-                enemy_armies = state.armies(enemy)
-                ratio = armies / enemy_armies
-                if ratio > best_ratio:
-                    best_ratio = ratio
+                score = self._attack_score(state, player_id, t, enemy)
+                if score > best_score:
+                    best_score = score
                     best = (t, enemy)
         return best
 
@@ -188,7 +242,7 @@ class BaselineStrategy(Strategy):
         ]
         if not border_neighbors:
             return None
-        to = _weakest(state, border_neighbors)
+        to = max(border_neighbors, key=lambda t: _threat_score(state, t, player_id) - state.armies(t))
         spare = state.armies(frm) - 1
         if spare < self.fortify_min_spare:
             return None
@@ -200,19 +254,34 @@ class ParameterizedStrategy(BaselineStrategy):
     a flat weight vector, so a training loop can search over them (e.g. the
     evolutionary self-play trainer in risk_sim.train)."""
 
-    PARAM_NAMES = ('attack_ratio_threshold', 'aggression', 'fortify_min_spare')
+    PARAM_NAMES = (
+        'attack_score_threshold', 'aggression', 'fortify_min_spare',
+        'continent_weight', 'elimination_weight', 'safety_weight',
+        'reinforcement_weakness_weight',
+    )
     PARAM_BOUNDS = {
-        'attack_ratio_threshold': (1.0, 3.0),
+        'attack_score_threshold': (1.0, 3.0),
         'aggression': (0.3, 1.0),
-        'fortify_min_spare': (1, 5),
+        'fortify_min_spare': (1, 8),
+        'continent_weight': (0.0, 3.0),
+        'elimination_weight': (0.0, 6.0),
+        'safety_weight': (0.0, 2.0),
+        'reinforcement_weakness_weight': (0.0, 20.0),
     }
 
     def __init__(self, weights: Optional[Dict[str, float]] = None):
         weights = weights or {}
+        defaults = BaselineStrategy()
         super().__init__(
-            attack_ratio_threshold=weights.get('attack_ratio_threshold', 1.5),
-            aggression=weights.get('aggression', 0.8),
-            fortify_min_spare=weights.get('fortify_min_spare', 2),
+            attack_score_threshold=weights.get('attack_score_threshold', defaults.attack_score_threshold),
+            aggression=weights.get('aggression', defaults.aggression),
+            fortify_min_spare=int(weights.get('fortify_min_spare', defaults.fortify_min_spare)),
+            continent_weight=weights.get('continent_weight', defaults.continent_weight),
+            elimination_weight=weights.get('elimination_weight', defaults.elimination_weight),
+            safety_weight=weights.get('safety_weight', defaults.safety_weight),
+            reinforcement_weakness_weight=weights.get(
+                'reinforcement_weakness_weight', defaults.reinforcement_weakness_weight
+            ),
         )
 
     def as_weights(self) -> Dict[str, float]:

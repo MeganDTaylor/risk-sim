@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 """Pure rules logic: reinforcement math, card sets, combat resolution."""
+import functools
 import random
-from itertools import combinations
-from typing import List, Tuple
+from itertools import combinations, product
+from typing import Dict, List, Tuple
 
 from . import board
 from .state import Card, GameState, WILD
@@ -72,3 +73,58 @@ def resolve_combat(attack_dice: int, defend_dice: int) -> Tuple[int, int]:
         else:
             attacker_losses += 1
     return attacker_losses, defender_losses
+
+
+def _combat_round_distribution(attack_dice: int, defend_dice: int) -> Dict[Tuple[int, int], float]:
+    """Exact probability of each (attacker_losses, defender_losses) outcome for
+    one clash at these dice counts, by enumerating every die-face combination."""
+    outcomes: Dict[Tuple[int, int], int] = {}
+    total = 0
+    for attacker_rolls in product(range(1, 7), repeat=attack_dice):
+        attacker_sorted = sorted(attacker_rolls, reverse=True)
+        for defender_rolls in product(range(1, 7), repeat=defend_dice):
+            defender_sorted = sorted(defender_rolls, reverse=True)
+            comparisons = min(attack_dice, defend_dice)
+            attacker_losses = sum(
+                1 for i in range(comparisons) if attacker_sorted[i] <= defender_sorted[i]
+            )
+            key = (attacker_losses, comparisons - attacker_losses)
+            outcomes[key] = outcomes.get(key, 0) + 1
+            total += 1
+    return {key: count / total for key, count in outcomes.items()}
+
+
+_ROUND_DISTRIBUTIONS = {
+    (attack_dice, defend_dice): _combat_round_distribution(attack_dice, defend_dice)
+    for attack_dice in (1, 2, 3) for defend_dice in (1, 2)
+}
+
+# Win-probability recursion depth/cache size grows with army counts; beyond
+# this many armies a side's fate is already all but decided, so clip inputs
+# rather than let huge stacks blow up the memoization table.
+_WIN_PROBABILITY_ARMY_CAP = 40
+
+
+@functools.lru_cache(maxsize=None)
+def _attacker_win_probability(attacker_armies: int, defender_armies: int) -> float:
+    if defender_armies <= 0:
+        return 1.0
+    if attacker_armies <= 1:
+        return 0.0
+    attack_dice = min(3, attacker_armies - 1)
+    defend_dice = min(2, defender_armies)
+    return sum(
+        probability * _attacker_win_probability(attacker_armies - a_loss, defender_armies - d_loss)
+        for (a_loss, d_loss), probability in _ROUND_DISTRIBUTIONS[(attack_dice, defend_dice)].items()
+    )
+
+
+def attacker_win_probability(attacker_armies: int, defender_armies: int) -> float:
+    """Probability the attacker eventually wipes out the defending territory if
+    both sides fight to the end always committing max dice ('Risk odds'). Used
+    as a static evaluation of an attack's favorability - a plain army ratio
+    doesn't capture how non-linear dice-based attrition actually is (e.g. 3v2
+    favors the attacker by far more than the 1.5x ratio suggests)."""
+    return _attacker_win_probability(
+        min(attacker_armies, _WIN_PROBABILITY_ARMY_CAP), min(defender_armies, _WIN_PROBABILITY_ARMY_CAP)
+    )
